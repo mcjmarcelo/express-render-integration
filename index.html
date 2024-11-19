@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Express API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .product-list {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Simple Express API Integration</h1>
+
+    <!-- Product List -->
+    <div class="product-list">
+        <h2>Products</h2>
+        <button id="fetchProducts">Get Products</button>
+        <ul id="productList"></ul>
+    </div>
+
+    <script>
+        const fetchProducts = document.getElementById('fetchProducts');
+        const productList = document.getElementById('productList');
+
+        // Fetch products when the button is clicked
+        fetchProducts.addEventListener('click', async () => {
+            try {
+                // Send request to fetch product data
+                const response = await fetch('http://localhost:3000/products');
+                const products = await response.json();
+                // Display products in the list
+                productList.innerHTML = '';
+                products.forEach(product => {
+                    const li = document.createElement('li');
+                    li.textContent = `${product.name} - $${product.price}`;
+                    productList.appendChild(li);
+                });
+            } catch (error) {
+                // Handle errors when fetching products
+                productList.innerHTML = '<li>Error fetching products.</li>';
+            }
+        });
+    </script>
+</body>
+
+</html>
